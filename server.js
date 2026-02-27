@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const bcrypt = require('bcryptjs'); // Using bcryptjs instead of bcrypt
+const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
 
@@ -11,8 +11,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files
 app.use(express.static(path.join(__dirname, 'Public')));
-
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Session Configuration
@@ -28,19 +28,17 @@ app.use(session({
 }));
 
 // ============= CREATE FOLDERS =============
+if (!fs.existsSync('uploads')) {
+    fs.mkdirSync('uploads');
+    console.log('📁 Uploads folder created');
+}
+
 if (!fs.existsSync('Public/images')) {
     fs.mkdirSync('Public/images', { recursive: true });
     console.log('📁 Public/images folder created');
 }
 
-
-if (!fs.existsSync('public/images')) {
-    fs.mkdirSync('public/images', { recursive: true });
-    console.log('📁 Public/images folder created');
-}
-
 // ============= DATABASE CONNECTION =============
-// Use environment variable for Render, fallback to local for development
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/trendprints';
 
 mongoose.connect(MONGODB_URI)
@@ -52,8 +50,6 @@ mongoose.connect(MONGODB_URI)
 .catch(err => console.log('❌ DATABASE ERROR:', err.message));
 
 // ============= SCHEMAS =============
-
-// User Schema
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -62,7 +58,6 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-// Product Schema
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     price: { type: Number, required: true },
@@ -73,7 +68,6 @@ const productSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-// Cart Schema
 const cartSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{
@@ -136,8 +130,6 @@ async function seedProducts() {
 }
 
 // ============= ROUTES =============
-
-// Home Page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'index.html'));
 });
@@ -162,8 +154,6 @@ app.get('/dashboard', (req, res) => {
 });
 
 // ============= AUTH ROUTES =============
-
-// Signup
 app.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -186,7 +176,6 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Login
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -210,7 +199,6 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Logout
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {
         res.clearCookie('connect.sid');
@@ -219,8 +207,6 @@ app.get('/logout', (req, res) => {
 });
 
 // ============= API ROUTES =============
-
-// Get All Products
 app.get('/api/products', async (req, res) => {
     try {
         const products = await Product.find().sort('-createdAt');
@@ -230,7 +216,6 @@ app.get('/api/products', async (req, res) => {
     }
 });
 
-// Get Cart
 app.get('/api/cart', async (req, res) => {
     try {
         if (!req.session.userId) {
@@ -248,7 +233,6 @@ app.get('/api/cart', async (req, res) => {
     }
 });
 
-// Add to Cart
 app.post('/api/cart/add', async (req, res) => {
     try {
         if (!req.session.userId) {
@@ -287,7 +271,6 @@ app.post('/api/cart/add', async (req, res) => {
     }
 });
 
-// Remove from Cart
 app.post('/api/cart/remove', async (req, res) => {
     try {
         if (!req.session.userId) {
@@ -311,37 +294,11 @@ app.post('/api/cart/remove', async (req, res) => {
     }
 });
 
-// Session Check
 app.get('/api/check-session', (req, res) => {
     res.json({
         loggedIn: !!req.session.userId,
         username: req.session.username
     });
-});
-
-// ============= SEED ROUTE =============
-app.get('/api/seed-products', async (req, res) => {
-    try {
-        await Product.deleteMany({});
-        const products = [
-            { name: 'Naruto Sage Mode', price: 799, image: 'naruto.jpg', category: 'Naruto', description: 'Naruto Sage Mode T-Shirt', stock: 15 },
-            { name: 'Goku Ultra Instinct', price: 899, image: 'goku.jpg', category: 'Dragon Ball', description: 'Goku Ultra Instinct T-Shirt', stock: 20 },
-            { name: 'Luffy Gear 5', price: 849, image: 'luffy.jpg', category: 'One Piece', description: 'Luffy Gear 5 T-Shirt', stock: 12 },
-            { name: 'Levi Ackerman', price: 999, image: 'levi.jpg', category: 'Attack on Titan', description: 'Levi Ackerman T-Shirt', stock: 8 },
-            { name: 'Gojo Satoru', price: 799, image: 'gojo.jpg', category: 'Jujutsu Kaisen', description: 'Gojo Satoru T-Shirt', stock: 15 },
-            { name: 'Itachi Uchiha', price: 899, image: 'itachi.jpg', category: 'Naruto', description: 'Itachi Uchiha T-Shirt', stock: 10 }
-        ];
-        await Product.insertMany(products);
-        res.send('✅ Products reseeded successfully!');
-    } catch {
-        res.send('❌ Error reseeding products');
-    }
-});
-
-// ============= ERROR HANDLING =============
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
 });
 
 // ============= START SERVER =============
