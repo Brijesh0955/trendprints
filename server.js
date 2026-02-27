@@ -11,10 +11,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🔥 IMPORTANT: Serve static files from 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Public')));
 
-// 🔥 IMPORTANT: Serve uploaded files from 'uploads' folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Session Configuration
@@ -30,10 +28,11 @@ app.use(session({
 }));
 
 // ============= CREATE FOLDERS =============
-if (!fs.existsSync('uploads')) {
-    fs.mkdirSync('uploads');
-    console.log('📁 Uploads folder created');
+if (!fs.existsSync('Public/images')) {
+    fs.mkdirSync('Public/images', { recursive: true });
+    console.log('📁 Public/images folder created');
 }
+
 
 if (!fs.existsSync('public/images')) {
     fs.mkdirSync('public/images', { recursive: true });
@@ -140,30 +139,26 @@ async function seedProducts() {
 
 // Home Page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'index.html'));
 });
 
-// Support Page
 app.get('/support', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'support.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'support.html'));
 });
 
-// Signup Page
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'signup.html'));
 });
 
-// Login Page
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'login.html'));
 });
 
-// Dashboard (Protected)
 app.get('/dashboard', (req, res) => {
     if (!req.session.userId) {
         return res.redirect('/login');
     }
-    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'dashboard.html'));
 });
 
 // ============= AUTH ROUTES =============
