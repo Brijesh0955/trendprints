@@ -287,6 +287,22 @@
             }
         }
 
+        /* ========== MOBILE OPTIMIZATION ========== */
+        @media (max-width: 768px) {
+            .orb, .shape, .lightning, .kanji-float, .glow-dot, .line, .wave, .firefly {
+                display: none !important;
+            }
+            
+            .particle {
+                opacity: 0.15 !important;
+                animation-duration: 20s !important;
+            }
+            
+            .star {
+                opacity: 0.1 !important;
+            }
+        }
+
         /* ========== NAVBAR STYLES ========== */
         .navbar {
             background: var(--navbar-bg);
@@ -963,143 +979,185 @@
         let cart = { items: [], total: 0 };
         let allProducts = [];
 
-        // ========== BACKGROUND EFFECTS GENERATOR ==========
-        function createBackgroundEffects() {
+        // ========== OPTIMIZED BACKGROUND EFFECTS ==========
+        function createOptimizedBackgroundEffects() {
             const container = document.getElementById('animeBg');
+            if (!container) return;
+            
             container.innerHTML = ''; // Clear existing
 
+            // Check if mobile
+            const isMobile = window.innerWidth <= 768;
+            
             const colors = [
                 '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7',
                 '#ff9f43', '#ee5a24', '#00cec9', '#6c5ce7', '#f368e0'
             ];
 
-            // 1. Particles (100 pieces)
-            for (let i = 0; i < 100; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.boxShadow = `0 0 20px ${particle.style.background}`;
-                container.appendChild(particle);
-            }
+            if (isMobile) {
+                // Mobile: Only 30 elements total
+                // Particles (20 pieces)
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 5 + 's';
+                    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.opacity = '0.2';
+                    container.appendChild(particle);
+                }
 
-            // 2. Orbs (5 pieces)
-            for (let i = 0; i < 5; i++) {
-                const orb = document.createElement('div');
-                orb.className = 'orb';
-                orb.style.top = Math.random() * 100 + '%';
-                orb.style.left = Math.random() * 100 + '%';
-                orb.style.background = colors[Math.floor(Math.random() * colors.length)];
-                orb.style.animationDelay = Math.random() * 10 + 's';
-                orb.style.animationDuration = (15 + Math.random() * 10) + 's';
-                container.appendChild(orb);
-            }
+                // Stars (10 pieces)
+                for (let i = 0; i < 10; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    star.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    container.appendChild(star);
+                }
+            } else {
+                // Desktop: All 246 elements
+                // Particles (100 pieces)
+                for (let i = 0; i < 100; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 15 + 's';
+                    particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.boxShadow = `0 0 20px ${particle.style.background}`;
+                    container.appendChild(particle);
+                }
 
-            // 3. Shapes (10 pieces)
-            for (let i = 0; i < 10; i++) {
-                const shape = document.createElement('div');
-                shape.className = 'shape';
-                shape.style.top = Math.random() * 100 + '%';
-                shape.style.left = Math.random() * 100 + '%';
-                shape.style.width = (20 + Math.random() * 50) + 'px';
-                shape.style.height = shape.style.width;
-                shape.style.borderRadius = Math.random() > 0.5 ? '50%' : '30% 70% 70% 30% / 30% 30% 70% 70%';
-                shape.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
-                shape.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(shape);
-            }
+                // Orbs (5 pieces)
+                for (let i = 0; i < 5; i++) {
+                    const orb = document.createElement('div');
+                    orb.className = 'orb';
+                    orb.style.top = Math.random() * 100 + '%';
+                    orb.style.left = Math.random() * 100 + '%';
+                    orb.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    orb.style.animationDelay = Math.random() * 10 + 's';
+                    orb.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    container.appendChild(orb);
+                }
 
-            // 4. Lightning (20 pieces)
-            for (let i = 0; i < 20; i++) {
-                const lightning = document.createElement('div');
-                lightning.className = 'lightning';
-                lightning.style.top = Math.random() * 100 + '%';
-                lightning.style.left = Math.random() * 100 + '%';
-                lightning.style.animationDelay = Math.random() * 3 + 's';
-                lightning.style.transform = `rotate(${Math.random() * 360}deg)`;
-                container.appendChild(lightning);
-            }
+                // Shapes (10 pieces)
+                for (let i = 0; i < 10; i++) {
+                    const shape = document.createElement('div');
+                    shape.className = 'shape';
+                    shape.style.top = Math.random() * 100 + '%';
+                    shape.style.left = Math.random() * 100 + '%';
+                    shape.style.width = (20 + Math.random() * 50) + 'px';
+                    shape.style.height = shape.style.width;
+                    shape.style.borderRadius = Math.random() > 0.5 ? '50%' : '30% 70% 70% 30% / 30% 30% 70% 70%';
+                    shape.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+                    shape.style.animationDelay = Math.random() * 10 + 's';
+                    container.appendChild(shape);
+                }
 
-            // 5. Floating Kanji (8 pieces)
-            const kanji = ['忍', '魂', '武', '道', '龍', '鬼', '滅', '拳', '神', '極', '愛', '夢'];
-            for (let i = 0; i < 8; i++) {
-                const kanjiEl = document.createElement('div');
-                kanjiEl.className = 'kanji-float';
-                kanjiEl.textContent = kanji[Math.floor(Math.random() * kanji.length)];
-                kanjiEl.style.top = Math.random() * 100 + '%';
-                kanjiEl.style.fontSize = (80 + Math.random() * 100) + 'px';
-                kanjiEl.style.animationDelay = Math.random() * 10 + 's';
-                kanjiEl.style.animationDuration = (20 + Math.random() * 20) + 's';
-                kanjiEl.style.color = `rgba(255, 255, 255, ${0.02 + Math.random() * 0.05})`;
-                container.appendChild(kanjiEl);
-            }
+                // Lightning (20 pieces)
+                for (let i = 0; i < 20; i++) {
+                    const lightning = document.createElement('div');
+                    lightning.className = 'lightning';
+                    lightning.style.top = Math.random() * 100 + '%';
+                    lightning.style.left = Math.random() * 100 + '%';
+                    lightning.style.animationDelay = Math.random() * 3 + 's';
+                    lightning.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    container.appendChild(lightning);
+                }
 
-            // 6. Glowing Dots (30 pieces)
-            for (let i = 0; i < 30; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'glow-dot';
-                dot.style.top = Math.random() * 100 + '%';
-                dot.style.left = Math.random() * 100 + '%';
-                dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-                dot.style.animationDelay = Math.random() * 3 + 's';
-                dot.style.animationDuration = (2 + Math.random() * 4) + 's';
-                container.appendChild(dot);
-            }
+                // Floating Kanji (8 pieces)
+                const kanji = ['忍', '魂', '武', '道', '龍', '鬼', '滅', '拳', '神', '極', '愛', '夢'];
+                for (let i = 0; i < 8; i++) {
+                    const kanjiEl = document.createElement('div');
+                    kanjiEl.className = 'kanji-float';
+                    kanjiEl.textContent = kanji[Math.floor(Math.random() * kanji.length)];
+                    kanjiEl.style.top = Math.random() * 100 + '%';
+                    kanjiEl.style.fontSize = (80 + Math.random() * 100) + 'px';
+                    kanjiEl.style.animationDelay = Math.random() * 10 + 's';
+                    kanjiEl.style.animationDuration = (20 + Math.random() * 20) + 's';
+                    kanjiEl.style.color = `rgba(255, 255, 255, ${0.02 + Math.random() * 0.05})`;
+                    container.appendChild(kanjiEl);
+                }
 
-            // 7. Lines (5 pieces)
-            for (let i = 0; i < 5; i++) {
-                const line = document.createElement('div');
-                line.className = 'line';
-                line.style.top = Math.random() * 100 + '%';
-                line.style.animationDelay = Math.random() * 5 + 's';
-                line.style.animationDuration = (8 + Math.random() * 7) + 's';
-                container.appendChild(line);
-            }
+                // Glowing Dots (30 pieces)
+                for (let i = 0; i < 30; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'glow-dot';
+                    dot.style.top = Math.random() * 100 + '%';
+                    dot.style.left = Math.random() * 100 + '%';
+                    dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    dot.style.animationDelay = Math.random() * 3 + 's';
+                    dot.style.animationDuration = (2 + Math.random() * 4) + 's';
+                    container.appendChild(dot);
+                }
 
-            // 8. Stars (50 pieces)
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                star.style.animationDuration = (1 + Math.random() * 3) + 's';
-                container.appendChild(star);
-            }
+                // Lines (5 pieces)
+                for (let i = 0; i < 5; i++) {
+                    const line = document.createElement('div');
+                    line.className = 'line';
+                    line.style.top = Math.random() * 100 + '%';
+                    line.style.animationDelay = Math.random() * 5 + 's';
+                    line.style.animationDuration = (8 + Math.random() * 7) + 's';
+                    container.appendChild(line);
+                }
 
-            // 9. Waves (3 pieces)
-            for (let i = 0; i < 3; i++) {
-                const wave = document.createElement('div');
-                wave.className = 'wave';
-                wave.style.top = Math.random() * 100 + '%';
-                wave.style.left = Math.random() * 100 + '%';
-                wave.style.animationDelay = Math.random() * 5 + 's';
-                wave.style.animationDuration = (6 + Math.random() * 4) + 's';
-                container.appendChild(wave);
-            }
+                // Stars (50 pieces)
+                for (let i = 0; i < 50; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    star.style.animationDuration = (1 + Math.random() * 3) + 's';
+                    container.appendChild(star);
+                }
 
-            // 10. Fireflies (15 pieces)
-            for (let i = 0; i < 15; i++) {
-                const firefly = document.createElement('div');
-                firefly.className = 'firefly';
-                firefly.style.top = Math.random() * 100 + '%';
-                firefly.style.left = Math.random() * 100 + '%';
-                firefly.style.background = `hsl(${Math.random() * 60 + 40}, 100%, 70%)`;
-                firefly.style.animationDelay = Math.random() * 10 + 's';
-                firefly.style.animationDuration = (8 + Math.random() * 7) + 's';
-                container.appendChild(firefly);
+                // Waves (3 pieces)
+                for (let i = 0; i < 3; i++) {
+                    const wave = document.createElement('div');
+                    wave.className = 'wave';
+                    wave.style.top = Math.random() * 100 + '%';
+                    wave.style.left = Math.random() * 100 + '%';
+                    wave.style.animationDelay = Math.random() * 5 + 's';
+                    wave.style.animationDuration = (6 + Math.random() * 4) + 's';
+                    container.appendChild(wave);
+                }
+
+                // Fireflies (15 pieces)
+                for (let i = 0; i < 15; i++) {
+                    const firefly = document.createElement('div');
+                    firefly.className = 'firefly';
+                    firefly.style.top = Math.random() * 100 + '%';
+                    firefly.style.left = Math.random() * 100 + '%';
+                    firefly.style.background = `hsl(${Math.random() * 60 + 40}, 100%, 70%)`;
+                    firefly.style.animationDelay = Math.random() * 10 + 's';
+                    firefly.style.animationDuration = (8 + Math.random() * 7) + 's';
+                    container.appendChild(firefly);
+                }
             }
         }
 
-        // Initialize background effects
-        document.addEventListener('DOMContentLoaded', createBackgroundEffects);
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', createOptimizedBackgroundEffects);
 
-        // Refresh effects every 30 seconds
-        setInterval(() => {
-            createBackgroundEffects();
-        }, 30000);
+        // Refresh effects every 30 seconds (only on desktop)
+        if (window.innerWidth > 768) {
+            setInterval(() => {
+                createOptimizedBackgroundEffects();
+            }, 30000);
+        }
+
+        // Handle resize (switch between mobile/desktop)
+        window.addEventListener('resize', function() {
+            clearTimeout(window.resizedFinished);
+            window.resizedFinished = setTimeout(function() {
+                createOptimizedBackgroundEffects();
+            }, 250);
+        });
 
         // Theme Functions
         function toggleTheme() {
