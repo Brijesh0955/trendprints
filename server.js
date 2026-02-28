@@ -71,7 +71,7 @@ const productSchema = new mongoose.Schema({
 const cartSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
         name: String,
         price: Number,
         quantity: { type: Number, default: 1 },
@@ -81,16 +81,16 @@ const cartSchema = new mongoose.Schema({
     total: { type: Number, default: 0 }
 });
 
-// ============= ORDER SCHEMA =============
+// ============= FIXED ORDER SCHEMA =============
 const orderSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-        name: String,
-        price: Number,
-        quantity: Number,
-        image: String,
-        size: String
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: false },
+        name: { type: String, required: true },
+        price: { type: Number, required: true },
+        quantity: { type: Number, required: true },
+        image: { type: String, default: 'default.jpg' },
+        size: { type: String, default: 'M' }
     }],
     total: { type: Number, required: true },
     status: { type: String, default: 'Pending' },
@@ -199,23 +199,19 @@ app.post('/api/orders', async (req, res) => {
             return res.status(400).json({ error: 'Incomplete address' });
         }
 
-        // Validate each item has required fields
-        for (const item of items) {
-            if (!item.productId || !item.name || !item.price || !item.quantity) {
-                return res.status(400).json({ error: 'Invalid item data' });
-            }
-        }
+        // Process items - don't validate ObjectId for sample products
+        const processedItems = items.map(item => ({
+            productId: item.productId && /^[0-9a-fA-F]{24}$/.test(item.productId) ? item.productId : null,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image || 'default.jpg',
+            size: item.size || 'M'
+        }));
 
         const order = new Order({
             userId: req.session.userId,
-            items: items.map(item => ({
-                productId: item.productId,
-                name: item.name,
-                price: item.price,
-                quantity: item.quantity,
-                image: item.image || 'default.jpg',
-                size: item.size || 'M'
-            })),
+            items: processedItems,
             total,
             address: {
                 fullName: address.fullName,
