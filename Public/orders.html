@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - TRENDPRINTS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --text-color: white;
+            --navbar-bg: rgba(255, 255, 255, 0.1);
+            --border-light: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(0, 0, 0, 0.4);
+            --text-color: #fff;
+            --navbar-bg: rgba(0, 0, 0, 0.5);
+            --border-light: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .theme-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .orders-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .order-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-light);
+            transition: 0.3s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .order-id {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-shipped {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-items {
+            margin: 1rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-light);
+            font-weight: bold;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .address-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 4rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+        }
+
+        .no-orders a {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.8rem 2rem;
+            background: white;
+            color: #764ba2;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">👕 TRENDPRINTS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/orders" style="background:rgba(255,255,255,0.2);">My Orders</a>
+            <a href="/support">Support</a>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>
+            <span>📦</span>
+            <span>My Orders</span>
+        </h1>
+
+        <div id="ordersContainer">
+            <div class="loading">Loading your orders...</div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Functions
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('themeBtn');
+            btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+
+        // Load Orders
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/my-orders');
+                const orders = await response.json();
+
+                const container = document.getElementById('ordersContainer');
+
+                if (!orders || orders.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-orders">
+                            <h2>No orders yet</h2>
+                            <p>Looks like you haven't placed any orders.</p>
+                            <a href="/dashboard">Start Shopping</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="orders-grid">
+                        ${orders.map(order => `
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <span class="order-id">Order #${order._id.slice(-8)}</span>
+                                    <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span>
+                                </div>
+                                
+                                <div class="order-items">
+                                    ${order.items.map(item => `
+                                        <div class="order-item">
+                                            <span>${item.name} (${item.size}) x ${item.quantity}</span>
+                                            <span>₹${item.price * item.quantity}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+
+                                <div class="order-total">
+                                    <span>Total Amount:</span>
+                                    <span>₹${order.total}</span>
+                                </div>
+
+                                <div class="address-info">
+                                    <strong>📍 Delivery Address:</strong><br>
+                                    ${order.address.fullName}<br>
+                                    📞 ${order.address.phone}<br>
+                                    🏠 ${order.address.address}<br>
+                                    ${order.address.city} - ${order.address.pincode}
+                                </div>
+
+                                <div class="order-footer">
+                                    <span>📅 ${new Date(order.createdAt).toLocaleDateString()}</span>
+                                    <span>💳 ${order.paymentMethod || 'COD'}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                document.getElementById('ordersContainer').innerHTML = `
+                    <div class="no-orders">
+                        <h2>Error loading orders</h2>
+                        <p>Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Load orders on page load
+        loadOrders();
+
+        // Check session
+        async function checkSession() {
+            try {
+                const res = await fetch('/api/check-session');
+                const data = await res.json();
+                if (!data.loggedIn) {
+                    window.location.href = '/login';
+                }
+            } catch (err) {
+                window.location.href = '/login';
+            }
+        }
+        checkSession();
+    </script>
+</body>
+</html>
