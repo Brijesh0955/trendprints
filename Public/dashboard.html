@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - TRENDPRINTS</title>
     <style>
-        /* ========== EXISTING STYLES (BILKUL SAME) ========== */
         * {
             margin: 0;
             padding: 0;
@@ -51,7 +50,7 @@
             position: relative;
         }
 
-        /* ========== EXISTING BACKGROUND ANIMATIONS ========== */
+        /* ========== ULTIMATE ANIME BACKGROUND ========== */
         .anime-bg-container {
             position: fixed;
             top: 0;
@@ -333,7 +332,6 @@
             border-radius: 50px;
         }
 
-        /* Search Box */
         .search-box {
             display: flex;
             align-items: center;
@@ -376,7 +374,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Support Link */
         .support-link {
             color: var(--text-color);
             text-decoration: none;
@@ -396,7 +393,6 @@
             transform: translateY(-2px);
         }
 
-        /* Cart Icon */
         .cart-icon {
             position: relative;
             cursor: pointer;
@@ -432,7 +428,6 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* Theme Button */
         .theme-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--border-light);
@@ -454,7 +449,6 @@
             transform: rotate(45deg);
         }
 
-        /* Logout Button */
         .logout-btn {
             padding: 0.5rem 1.5rem;
             background: rgba(255, 71, 87, 0.2);
@@ -471,7 +465,6 @@
             transform: translateY(-2px);
         }
 
-        /* ========== HERO SECTION ========== */
         .hero {
             text-align: center;
             padding: 6rem 1rem 3rem 1rem;
@@ -491,7 +484,6 @@
             line-height: 1.6;
         }
 
-        /* ========== NEW FILTER SECTION ========== */
         .filter-section {
             padding: 1rem 2rem;
             display: flex;
@@ -535,7 +527,6 @@
             background: rgba(255,255,255,0.2);
         }
 
-        /* ========== PRODUCTS GRID ========== */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -609,7 +600,6 @@
             margin-bottom: 1rem;
         }
 
-        /* ========== NEW SIZE SELECTOR ========== */
         .product-sizes {
             display: flex;
             gap: 0.5rem;
@@ -660,7 +650,6 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* ========== IMAGE MODAL STYLES ========== */
         .image-modal {
             display: none;
             position: fixed;
@@ -715,7 +704,6 @@
             transform: rotate(90deg);
         }
 
-        /* ========== CART SIDEBAR ========== */
         .cart-sidebar {
             position: fixed;
             top: 0;
@@ -820,7 +808,6 @@
             opacity: 0.8;
         }
 
-        /* NEW: Show size in cart */
         .cart-item-size {
             font-size: 0.85rem;
             opacity: 0.7;
@@ -912,7 +899,6 @@
             font-size: 1.2rem;
         }
 
-        /* ========== MOBILE FIXES ========== */
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
@@ -973,7 +959,6 @@
             }
         }
 
-        /* Small phones */
         @media (max-width: 480px) {
             body {
                 padding-top: 140px;
@@ -994,12 +979,9 @@
     </style>
 </head>
 <body>
-    <!-- Background Container -->
     <div class="anime-bg-container" id="animeBg"></div>
-
     <div class="toast" id="toast">✅ Added to cart!</div>
 
-    <!-- Image Zoom Modal -->
     <div class="image-modal" id="imageModal" onclick="closeImageModal()">
         <span class="close-modal" onclick="closeImageModal()">&times;</span>
         <img id="modalImage" src="" alt="Product Image">
@@ -1009,19 +991,15 @@
         <div class="logo">👕 TRENDPRINTS</div>
         <div class="user-info">
             <span class="username" id="username">Welcome!</span>
-            
-            <!-- SEARCH BOX -->
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchProducts()">
                 <button onclick="searchProducts()">🔍</button>
             </div>
-
             <a href="/support" class="support-link">
                 <span>🆘</span> <span>Support</span>
             </a>
             <div class="cart-icon" onclick="toggleCart()">
-                🛒
-                <span class="cart-count" id="cartCount">0</span>
+                🛒 <span class="cart-count" id="cartCount">0</span>
             </div>
             <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
             <a href="/logout" class="logout-btn">Logout</a>
@@ -1029,24 +1007,17 @@
     </nav>
 
     <div class="hero">
-        <h1>🔥 Latest Anime Collection</h1>
-        <p>Discover premium quality anime printed t-shirts featuring your favorite characters.</p>
+        <h1>🔥 Latest Collection</h1>
+        <p>Discover premium quality anime printed t-shirts for everyone</p>
     </div>
 
-    <!-- NEW: Filter Section (Men/Women/Categories) -->
     <div class="filter-section">
-        <div class="filter-group">
-            <span class="filter-label">Gender:</span>
-            <button class="filter-btn active" onclick="filterByGender('all')">All</button>
-            <button class="filter-btn" onclick="filterByGender('men')">Men's</button>
-            <button class="filter-btn" onclick="filterByGender('women')">Women's</button>
-        </div>
-
         <div class="filter-group">
             <span class="filter-label">Category:</span>
             <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
             <button class="filter-btn" onclick="filterByCategory('anime')">Anime</button>
-            <button class="filter-btn" onclick="filterByCategory('casual')">Casual</button>
+            <button class="filter-btn" onclick="filterByCategory('men')">Men's</button>
+            <button class="filter-btn" onclick="filterByCategory('women')">Women's</button>
         </div>
 
         <div class="filter-group">
@@ -1076,51 +1047,69 @@
             <span>Total:</span>
             <span>₹0</span>
         </div>
-        <button class="checkout-btn" onclick="checkout()">
-            Proceed to Checkout
-        </button>
+        <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
     </div>
 
     <script>
         let cart = { items: [], total: 0 };
         let allProducts = [];
         let selectedSizes = {};
-        let currentFilter = { gender: 'all', category: 'all', size: 'all' };
+        let currentFilter = { category: 'all', size: 'all' };
 
-        // Sample products with gender and sizes
-        const sampleProducts = [
-            { _id: '1', name: 'Naruto Sage Mode', price: 799, image: 'naruto.jpg', category: 'anime', gender: 'men', sizes: ['S', 'M', 'L', 'XL'] },
-            { _id: '2', name: 'Goku Ultra Instinct', price: 899, image: 'goku.jpg', category: 'anime', gender: 'men', sizes: ['M', 'L', 'XL', 'XXL'] },
-            { _id: '3', name: 'Luffy Gear 5', price: 849, image: 'luffy.jpg', category: 'anime', gender: 'men', sizes: ['S', 'M', 'L'] },
-            { _id: '4', name: 'Levi Ackerman', price: 999, image: 'levi.jpg', category: 'anime', gender: 'men', sizes: ['S', 'M', 'L', 'XL'] },
-            { _id: '5', name: 'Gojo Satoru', price: 799, image: 'gojo.jpg', category: 'anime', gender: 'men', sizes: ['M', 'L', 'XL'] },
-            { _id: '6', name: 'Itachi Uchiha', price: 899, image: 'itachi.jpg', category: 'anime', gender: 'men', sizes: ['M', 'L', 'XL'] },
-            { _id: '7', name: 'Sakura Haruno', price: 749, image: 'sakura.jpg', category: 'anime', gender: 'women', sizes: ['XS', 'S', 'M', 'L'] },
-            { _id: '8', name: 'Hinata Hyuga', price: 849, image: 'hinata.jpg', category: 'anime', gender: 'women', sizes: ['XS', 'S', 'M'] },
-            { _id: '9', name: 'Mikasa Ackerman', price: 949, image: 'mikasa.jpg', category: 'anime', gender: 'women', sizes: ['S', 'M', 'L', 'XL'] },
-            { _id: '10', name: 'Nobara Kugisaki', price: 799, image: 'nobara.jpg', category: 'anime', gender: 'women', sizes: ['XS', 'S', 'M', 'L'] },
-            { _id: '11', name: 'Plain Black Tee', price: 499, image: 'black.jpg', category: 'casual', gender: 'men', sizes: ['S', 'M', 'L', 'XL'] },
-            { _id: '12', name: 'Oversized Tee', price: 549, image: 'oversized.jpg', category: 'casual', gender: 'women', sizes: ['XS', 'S', 'M', 'L'] }
+        // ========== PRODUCTS ==========
+        // Anime Products (10 - Pure Anime, not in men/women)
+        const animeProducts = [
+            { _id: 'a1', name: 'Naruto Sage Mode', price: 799, image: 'naruto.jpg', category: 'anime', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'a2', name: 'Goku Ultra Instinct', price: 899, image: 'goku.jpg', category: 'anime', sizes: ['M', 'L', 'XL'] },
+            { _id: 'a3', name: 'Luffy Gear 5', price: 849, image: 'luffy.jpg', category: 'anime', sizes: ['S', 'M', 'L'] },
+            { _id: 'a4', name: 'Levi Ackerman', price: 999, image: 'levi.jpg', category: 'anime', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'a5', name: 'Gojo Satoru', price: 799, image: 'gojo.jpg', category: 'anime', sizes: ['M', 'L', 'XL'] },
+            { _id: 'a6', name: 'Itachi Uchiha', price: 899, image: 'itachi.jpg', category: 'anime', sizes: ['M', 'L', 'XL'] },
+            { _id: 'a7', name: 'Sakura Haruno', price: 749, image: 'sakura.jpg', category: 'anime', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'a8', name: 'Hinata Hyuga', price: 849, image: 'hinata.jpg', category: 'anime', sizes: ['XS', 'S', 'M'] },
+            { _id: 'a9', name: 'Mikasa Ackerman', price: 949, image: 'mikasa.jpg', category: 'anime', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'a10', name: 'Nobara Kugisaki', price: 799, image: 'nobara.jpg', category: 'anime', sizes: ['XS', 'S', 'M', 'L'] }
         ];
 
-        // ========== BACKGROUND EFFECTS (EXISTING) ==========
+        // Men's Products (9 - Color based)
+        const menProducts = [
+            { _id: 'm1', name: 'Black Solid T-Shirt', price: 499, image: 'men-black.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm2', name: 'White Solid T-Shirt', price: 499, image: 'men-white.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm3', name: 'Navy Blue T-Shirt', price: 549, image: 'men-navy.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm4', name: 'Gray Solid T-Shirt', price: 499, image: 'men-gray.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm5', name: 'Olive Green T-Shirt', price: 549, image: 'men-olive.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm6', name: 'Maroon T-Shirt', price: 549, image: 'men-maroon.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm7', name: 'Teal T-Shirt', price: 549, image: 'men-teal.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm8', name: 'Brown T-Shirt', price: 499, image: 'men-brown.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] },
+            { _id: 'm9', name: 'Charcoal T-Shirt', price: 549, image: 'men-charcoal.jpg', category: 'men', sizes: ['S', 'M', 'L', 'XL'] }
+        ];
+
+        // Women's Products (9 - Color based)
+        const womenProducts = [
+            { _id: 'w1', name: 'Pink Solid T-Shirt', price: 499, image: 'women-pink.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w2', name: 'Coral T-Shirt', price: 549, image: 'women-coral.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w3', name: 'Lavender T-Shirt', price: 549, image: 'women-lavender.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w4', name: 'Mint Green T-Shirt', price: 549, image: 'women-mint.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w5', name: 'Peach T-Shirt', price: 499, image: 'women-peach.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w6', name: 'Rose T-Shirt', price: 549, image: 'women-rose.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w7', name: 'Purple T-Shirt', price: 549, image: 'women-purple.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w8', name: 'Turquoise T-Shirt', price: 549, image: 'women-turquoise.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] },
+            { _id: 'w9', name: 'Magenta T-Shirt', price: 549, image: 'women-magenta.jpg', category: 'women', sizes: ['XS', 'S', 'M', 'L'] }
+        ];
+
+        // Combine all products
+        allProducts = [...animeProducts, ...menProducts, ...womenProducts];
+
+        // ========== BACKGROUND EFFECTS ==========
         function createOptimizedBackgroundEffects() {
             const container = document.getElementById('animeBg');
             if (!container) return;
             
-            container.innerHTML = ''; // Clear existing
-
-            // Check if mobile
+            container.innerHTML = '';
             const isMobile = window.innerWidth <= 768;
-            
-            const colors = [
-                '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7',
-                '#ff9f43', '#ee5a24', '#00cec9', '#6c5ce7', '#f368e0'
-            ];
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#ff9f43', '#ee5a24', '#00cec9', '#6c5ce7', '#f368e0'];
 
             if (isMobile) {
-                // Mobile: Only 30 elements total
-                // Particles (20 pieces)
                 for (let i = 0; i < 20; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
@@ -1131,8 +1120,6 @@
                     particle.style.opacity = '0.2';
                     container.appendChild(particle);
                 }
-
-                // Stars (10 pieces)
                 for (let i = 0; i < 10; i++) {
                     const star = document.createElement('div');
                     star.className = 'star';
@@ -1143,7 +1130,6 @@
                     container.appendChild(star);
                 }
             } else {
-                // Desktop: All 246 elements (existing code)
                 for (let i = 0; i < 100; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
@@ -1154,7 +1140,6 @@
                     particle.style.boxShadow = `0 0 20px ${particle.style.background}`;
                     container.appendChild(particle);
                 }
-
                 for (let i = 0; i < 5; i++) {
                     const orb = document.createElement('div');
                     orb.className = 'orb';
@@ -1165,7 +1150,6 @@
                     orb.style.animationDuration = (15 + Math.random() * 10) + 's';
                     container.appendChild(orb);
                 }
-
                 for (let i = 0; i < 10; i++) {
                     const shape = document.createElement('div');
                     shape.className = 'shape';
@@ -1178,7 +1162,6 @@
                     shape.style.animationDelay = Math.random() * 10 + 's';
                     container.appendChild(shape);
                 }
-
                 for (let i = 0; i < 20; i++) {
                     const lightning = document.createElement('div');
                     lightning.className = 'lightning';
@@ -1188,7 +1171,6 @@
                     lightning.style.transform = `rotate(${Math.random() * 360}deg)`;
                     container.appendChild(lightning);
                 }
-
                 const kanji = ['忍', '魂', '武', '道', '龍', '鬼', '滅', '拳', '神', '極', '愛', '夢'];
                 for (let i = 0; i < 8; i++) {
                     const kanjiEl = document.createElement('div');
@@ -1201,7 +1183,6 @@
                     kanjiEl.style.color = `rgba(255, 255, 255, ${0.02 + Math.random() * 0.05})`;
                     container.appendChild(kanjiEl);
                 }
-
                 for (let i = 0; i < 30; i++) {
                     const dot = document.createElement('div');
                     dot.className = 'glow-dot';
@@ -1212,7 +1193,6 @@
                     dot.style.animationDuration = (2 + Math.random() * 4) + 's';
                     container.appendChild(dot);
                 }
-
                 for (let i = 0; i < 5; i++) {
                     const line = document.createElement('div');
                     line.className = 'line';
@@ -1221,7 +1201,6 @@
                     line.style.animationDuration = (8 + Math.random() * 7) + 's';
                     container.appendChild(line);
                 }
-
                 for (let i = 0; i < 50; i++) {
                     const star = document.createElement('div');
                     star.className = 'star';
@@ -1231,7 +1210,6 @@
                     star.style.animationDuration = (1 + Math.random() * 3) + 's';
                     container.appendChild(star);
                 }
-
                 for (let i = 0; i < 3; i++) {
                     const wave = document.createElement('div');
                     wave.className = 'wave';
@@ -1241,7 +1219,6 @@
                     wave.style.animationDuration = (6 + Math.random() * 4) + 's';
                     container.appendChild(wave);
                 }
-
                 for (let i = 0; i < 15; i++) {
                     const firefly = document.createElement('div');
                     firefly.className = 'firefly';
@@ -1255,11 +1232,8 @@
             }
         }
 
-        // Call background effects
         document.addEventListener('DOMContentLoaded', createOptimizedBackgroundEffects);
-        if (window.innerWidth > 768) {
-            setInterval(createOptimizedBackgroundEffects, 30000);
-        }
+        if (window.innerWidth > 768) setInterval(createOptimizedBackgroundEffects, 30000);
         window.addEventListener('resize', function() {
             clearTimeout(window.resizedFinished);
             window.resizedFinished = setTimeout(createOptimizedBackgroundEffects, 250);
@@ -1272,86 +1246,54 @@
             btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
-
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('themeBtn').textContent = '☀️';
         }
 
-        // Username
         const urlParams = new URLSearchParams(window.location.search);
         const username = urlParams.get('user');
-        if (username) {
-            document.getElementById('username').textContent = `Welcome, ${username}!`;
-        }
+        if (username) document.getElementById('username').textContent = `Welcome, ${username}!`;
 
-        // ========== IMAGE ZOOM FUNCTIONS ==========
-        function openImageModal(imageSrc) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modalImg.src = imageSrc;
-            modal.classList.add('active');
+        function openImageModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeImageModal() {
             document.getElementById('imageModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeImageModal();
-        });
-
-        // ========== PRODUCT FUNCTIONS ==========
-        function loadProducts() {
-            allProducts = sampleProducts; // Using sample products
-            displayProducts();
-        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeImageModal(); });
 
         function displayProducts() {
             let filtered = allProducts;
-
-            // Apply gender filter
-            if (currentFilter.gender !== 'all') {
-                filtered = filtered.filter(p => p.gender === currentFilter.gender);
-            }
-
-            // Apply category filter
-            if (currentFilter.category !== 'all') {
-                filtered = filtered.filter(p => p.category === currentFilter.category);
-            }
+            if (currentFilter.category !== 'all') filtered = filtered.filter(p => p.category === currentFilter.category);
+            if (currentFilter.size !== 'all') filtered = filtered.filter(p => p.sizes.includes(currentFilter.size));
 
             const grid = document.getElementById('productsGrid');
-            
             if (filtered.length === 0) {
                 grid.innerHTML = '<div class="loading">No products found</div>';
                 return;
             }
-
             grid.innerHTML = filtered.map(product => {
                 const selectedSize = selectedSizes[product._id] || '';
                 return `
                     <div class="product-card">
                         <div class="product-image" onclick="openImageModal('/images/${product.image}')">
-                            <img src="/images/${product.image}" 
-                                 alt="${product.name}"
-                                 onerror="this.onerror=null; this.src='https://placehold.co/300x400/764ba2/white?text=${product.name.replace(/ /g, '+')}'"
-                                 style="width:100%; height:300px; object-fit:cover;">
+                            <img src="/images/${product.image}" alt="${product.name}"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/300x400/764ba2/white?text=${product.name.replace(/ /g, '+')}'">
                         </div>
                         <div class="product-info">
                             <div class="product-name">${product.name}</div>
-                            <span class="product-category">${product.category} • ${product.gender === 'men' ? '👨' : '👩'}</span>
+                            <span class="product-category">${product.category === 'anime' ? '📺' : product.category === 'men' ? '👨' : '👩'}</span>
                             <div class="product-price">₹${product.price}</div>
-                            
-                            <!-- NEW: Size Selector -->
                             <div class="product-sizes">
                                 ${product.sizes.map(size => `
                                     <button class="size-btn ${selectedSize === size ? 'selected' : ''}" 
                                             onclick="selectSize('${product._id}', '${size}')">${size}</button>
                                 `).join('')}
                             </div>
-
                             <button class="add-to-cart" onclick="addToCart('${product._id}', '${product.name}', ${product.price}, '${product.image}', getSelectedSize('${product._id}'))">
                                 Add to Cart
                             </button>
@@ -1361,26 +1303,15 @@
             }).join('');
         }
 
-        // NEW: Size functions
-        function selectSize(productId, size) {
-            selectedSizes[productId] = size;
-            displayProducts(); // Refresh to show selected size
-        }
+        function selectSize(productId, size) { selectedSizes[productId] = size; displayProducts(); }
+        function getSelectedSize(productId) { return selectedSizes[productId] || 'M'; }
 
-        function getSelectedSize(productId) {
-            return selectedSizes[productId] || 'M';
-        }
-
-        // NEW: Filter functions
-        function filterByGender(gender) {
-            currentFilter.gender = gender;
-            updateActiveFilterButtons('gender', gender);
-            displayProducts();
-        }
-
-        function filterByCategory(category) {
-            currentFilter.category = category;
-            updateActiveFilterButtons('category', category);
+        function filterByCategory(cat) {
+            currentFilter.category = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.textContent.toLowerCase() === cat || (cat === 'all' && btn.textContent === 'All')) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
             displayProducts();
         }
 
@@ -1389,156 +1320,84 @@
             displayProducts();
         }
 
-        function updateActiveFilterButtons(type, value) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (type === 'gender') {
-                    if ((value === 'all' && btn.textContent === 'All') || 
-                        (value === 'men' && btn.textContent === "Men's") ||
-                        (value === 'women' && btn.textContent === "Women's")) {
-                        btn.classList.add('active');
-                    } else if (btn.parentElement.previousElementSibling?.textContent.includes('Gender')) {
-                        btn.classList.remove('active');
-                    }
-                } else if (type === 'category') {
-                    if ((value === 'all' && btn.textContent === 'All') || 
-                        (value === 'anime' && btn.textContent === 'Anime') ||
-                        (value === 'casual' && btn.textContent === 'Casual')) {
-                        btn.classList.add('active');
-                    } else if (btn.parentElement.previousElementSibling?.textContent.includes('Category')) {
-                        btn.classList.remove('active');
-                    }
-                }
-            });
-        }
-
         function searchProducts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
-                displayProducts();
-                return;
-            }
-            
-            const filtered = allProducts.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) || 
-                product.category.toLowerCase().includes(searchTerm)
-            );
-            
+            const term = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (term === '') { displayProducts(); return; }
+            const filtered = allProducts.filter(p => p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term));
             const grid = document.getElementById('productsGrid');
-            if (filtered.length === 0) {
-                grid.innerHTML = '<div class="loading">No products found</div>';
-            } else {
-                grid.innerHTML = filtered.map(product => {
-                    const selectedSize = selectedSizes[product._id] || '';
-                    return `
-                        <div class="product-card">
-                            <div class="product-image" onclick="openImageModal('/images/${product.image}')">
-                                <img src="/images/${product.image}" 
-                                     onerror="this.src='https://placehold.co/300x400/764ba2/white?text=${product.name.replace(/ /g, '+')}'">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-name">${product.name}</div>
-                                <div class="product-price">₹${product.price}</div>
-                                <div class="product-sizes">
-                                    ${product.sizes.map(size => `
-                                        <button class="size-btn ${selectedSize === size ? 'selected' : ''}" 
-                                                onclick="selectSize('${product._id}', '${size}')">${size}</button>
-                                    `).join('')}
-                                </div>
-                                <button class="add-to-cart" onclick="addToCart('${product._id}', '${product.name}', ${product.price}, '${product.image}', getSelectedSize('${product._id}'))">
-                                    Add to Cart
-                                </button>
-                            </div>
+            if (filtered.length === 0) grid.innerHTML = '<div class="loading">No products found</div>';
+            else grid.innerHTML = filtered.map(product => {
+                const selectedSize = selectedSizes[product._id] || '';
+                return `
+                    <div class="product-card">
+                        <div class="product-image" onclick="openImageModal('/images/${product.image}')">
+                            <img src="/images/${product.image}" onerror="this.src='https://placehold.co/300x400/764ba2/white?text=${product.name.replace(/ /g, '+')}'">
                         </div>
-                    `;
-                }).join('');
-            }
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">₹${product.price}</div>
+                            <div class="product-sizes">
+                                ${product.sizes.map(size => `
+                                    <button class="size-btn ${selectedSize === size ? 'selected' : ''}" 
+                                            onclick="selectSize('${product._id}', '${size}')">${size}</button>
+                                `).join('')}
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart('${product._id}', '${product.name}', ${product.price}, '${product.image}', getSelectedSize('${product._id}'))">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // ========== CART FUNCTIONS ==========
-        function loadCart() {
-            // Cart loaded from server or empty
-        }
-
+        function loadCart() {}
         function addToCart(productId, name, price, image, size) {
-            if (!size) {
-                alert('Please select a size');
-                return;
-            }
-
-            cart.items.push({
-                productId,
-                name,
-                price,
-                quantity: 1,
-                image,
-                size
-            });
+            if (!size) { alert('Please select a size'); return; }
+            cart.items.push({ productId, name, price, quantity: 1, image, size });
             cart.total += price;
-            
             updateCartUI();
             showToast('Added to cart!');
         }
-
         function removeFromCart(productId) {
             cart.items = cart.items.filter(item => item.productId !== productId);
             cart.total = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             updateCartUI();
             showToast('Removed from cart');
         }
-
         function updateCartUI() {
-            const itemCount = cart.items.length;
-            document.getElementById('cartCount').textContent = itemCount;
-            
+            document.getElementById('cartCount').textContent = cart.items.length;
             const cartItemsDiv = document.getElementById('cartItems');
-            
-            if (cart.items.length === 0) {
-                cartItemsDiv.innerHTML = '<div style="text-align: center; padding: 2rem;">Your cart is empty</div>';
-            } else {
-                cartItemsDiv.innerHTML = cart.items.map(item => `
-                    <div class="cart-item">
-                        <img src="/images/${item.image}" 
-                             alt="${item.name}"
-                             onerror="this.src='https://placehold.co/70x70/764ba2/white?text=${item.name.charAt(0)}'">
-                        <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">₹${item.price}</div>
-                            <div class="cart-item-quantity">Qty: ${item.quantity}</div>
-                            <div class="cart-item-size">Size: ${item.size}</div>
-                        </div>
-                        <span class="remove-item" onclick="removeFromCart('${item.productId}')">🗑️</span>
+            if (cart.items.length === 0) cartItemsDiv.innerHTML = '<div style="text-align: center; padding: 2rem;">Your cart is empty</div>';
+            else cartItemsDiv.innerHTML = cart.items.map(item => `
+                <div class="cart-item">
+                    <img src="/images/${item.image}" onerror="this.src='https://placehold.co/70x70/764ba2/white?text=${item.name.charAt(0)}'">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-price">₹${item.price}</div>
+                        <div class="cart-item-quantity">Qty: ${item.quantity}</div>
+                        <div class="cart-item-size">Size: ${item.size}</div>
                     </div>
-                `).join('');
-            }
-            
-            document.getElementById('cartTotal').innerHTML = `
-                <span>Total:</span>
-                <span>₹${cart.total || 0}</span>
-            `;
+                    <span class="remove-item" onclick="removeFromCart('${item.productId}')">🗑️</span>
+                </div>
+            `).join('');
+            document.getElementById('cartTotal').innerHTML = `<span>Total:</span><span>₹${cart.total || 0}</span>`;
         }
-
-        function showToast(message) {
+        function showToast(msg) {
             const toast = document.getElementById('toast');
-            toast.textContent = `✅ ${message}`;
+            toast.textContent = `✅ ${msg}`;
             toast.style.display = 'block';
             setTimeout(() => toast.style.display = 'none', 2000);
         }
-
         function toggleCart() {
             document.getElementById('cartSidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('active');
         }
-
         function checkout() {
-            if (cart.items.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
+            if (cart.items.length === 0) { alert('Your cart is empty!'); return; }
             alert(`Total: ₹${cart.total}\nCheckout coming soon!`);
         }
 
-        // Global functions
         window.removeFromCart = removeFromCart;
         window.toggleCart = toggleCart;
         window.checkout = checkout;
@@ -1546,14 +1405,12 @@
         window.openImageModal = openImageModal;
         window.closeImageModal = closeImageModal;
         window.toggleTheme = toggleTheme;
-        window.filterByGender = filterByGender;
         window.filterByCategory = filterByCategory;
         window.filterBySize = filterBySize;
         window.selectSize = selectSize;
         window.getSelectedSize = getSelectedSize;
 
-        // Initialize
-        loadProducts();
+        displayProducts();
         loadCart();
     </script>
 </body>
