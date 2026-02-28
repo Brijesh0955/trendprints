@@ -81,7 +81,7 @@ const cartSchema = new mongoose.Schema({
     total: { type: Number, default: 0 }
 });
 
-// ============= FIXED ORDER SCHEMA =============
+// ============= ORDER SCHEMA =============
 const orderSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [{
@@ -350,6 +350,68 @@ app.get('/api/admin/stats', isAdmin, async (req, res) => {
             totalUsers,
             totalRevenue
         });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ============= ADMIN PRODUCT ROUTES =============
+
+// Get All Products (Admin)
+app.get('/api/admin/products', isAdmin, async (req, res) => {
+    try {
+        const products = await Product.find().sort('-createdAt');
+        res.json(products);
+    } catch (err) {
+        console.error('Error loading products:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get All Users (Admin)
+app.get('/api/admin/users', isAdmin, async (req, res) => {
+    try {
+        const users = await User.find().select('-password').sort('-createdAt');
+        res.json(users);
+    } catch (err) {
+        console.error('Error loading users:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete User (Admin)
+app.delete('/api/admin/users/:id', isAdmin, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (user.role === 'admin') {
+            return res.status(400).json({ error: 'Cannot delete admin user' });
+        }
+        await User.findByIdAndDelete(req.params.id);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Update Product (Admin)
+app.put('/api/admin/products/:id', isAdmin, async (req, res) => {
+    try {
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        res.json({ success: true, product });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete Product (Admin)
+app.delete('/api/admin/products/:id', isAdmin, async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
